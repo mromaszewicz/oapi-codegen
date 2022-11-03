@@ -1,0 +1,243 @@
+# This is an OpenAPI 3 spec fragment which creates components of each possible kind
+# along with inner anonymous structures.
+openapi: 3.0.0
+info:
+  title: placeholder
+  version: 3.0.0
+paths:
+  /:
+    get:
+      operationId: placeholder
+      responses:
+        201:
+          description: a placeholder response to make spec linting happy
+  /test/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      operationId: getOp
+      responses:
+        200:
+          description: no content
+      parameters:
+        - name: format
+          in: query
+          schema:
+            type: string
+    delete:
+      operationId: deleteOp
+      responses:
+        200:
+          description: no content
+  /test:
+    put:
+      operationId: putOp
+      requestBody:
+        description: body
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+              required: [key, value]
+      responses:
+        200:
+          description: no content
+    post:
+      operationId: postOp
+      responses:
+        200:
+          description: no content
+      requestBody:
+        description: body
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+              required: [ key, value ]
+    options:
+      operationId: optionsOp
+      responses:
+        200:
+          description: no content
+
+    head:
+      operationId: headOp
+      responses:
+        200:
+          description: no content
+    patch:
+      operationId: patchOp
+      responses:
+        200:
+          description: no content
+    trace:
+      operationId: traceOp
+      responses:
+        200:
+          description: no content
+  /parameters/{SharedPathParam}:
+    parameters:
+      - name: SharedPathParam
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: SharedQueryParam
+        in: query
+        required: false
+        schema:
+          type: string
+    get:
+      operationId: GetWithParameters
+      parameters:
+        - name: SpecificQueryParam
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: no content
+
+components:
+  schemas:
+    SimpleObject:
+      type: object
+      properties:
+        Name:
+          type: string
+        Color:
+          type: string
+      required: [name, color]
+    SimpleObjectWithAdditionalProperties:
+      allOf:
+        - $ref: "#/components/schemas/SimpleObject"
+        - type: object
+          additionalProperties:
+            type: string
+
+    ObjectWithAnonymousType:
+      type: object
+      properties:
+        Name:
+          type: string
+        CustomProperty:
+          type: object
+          properties:
+            Field1:
+              type: string
+            Field2:
+              type: object
+              properties:
+                Prop1:
+                  type: number
+                Prop2:
+                  type: number
+    Union:
+      allOf:
+        - properties:
+            Field1:
+              type: string
+            Field2:
+              type: string
+        - properties:
+            Field3:
+              type: string
+            Field4:
+              type: string
+        - $ref: "#/components/schemas/SimpleObject"
+    Choice:
+      oneOf:
+        - properties:
+            Field1:
+              type: string
+            Field2:
+              type: string
+        - properties:
+            Field3:
+              type: string
+            Field4:
+              type: string
+        - $ref: "#/components/schemas/SimpleObject"
+    MultipleChoice:
+      anyOf:
+        - properties:
+            Field1:
+              type: string
+            Field2:
+              type: string
+        - properties:
+            Field3:
+              type: string
+            Field4:
+              type: string
+        - $ref: "#/components/schemas/SimpleObject"
+    MutuallyRecursiveA:
+      type: object
+      properties:
+        Name:
+          type: string
+        Other:
+          $ref: "#/components/schemas/MutuallyRecursiveB"
+    MutuallyRecursiveB:
+      type: object
+      properties:
+        Name:
+          type: string
+        Other:
+          $ref: "#/components/schemas/MutuallyRecursiveA"
+    SelfRecursive:
+      type: object
+      properties:
+        Name:
+          type: string
+        Other:
+          $ref: "#/components/schemas/SelfRecursive"
+    IntEnum:
+      type: number
+      enum: [1, 2, 3]
+    StringEnum:
+      type: string
+      enum: [one, two, three]
+
+  requestBodies:
+    MultiContent:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ObjectWithAnonymousType"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/ObjectWithAnonymousType"
+  responses:
+    MultiContent:
+      description: placeholder
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ObjectWithAnonymousType"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/ObjectWithAnonymousType"

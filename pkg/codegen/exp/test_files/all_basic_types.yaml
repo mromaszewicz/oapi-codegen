@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  title: placeholder
+  version: 3.0.0
+paths:
+  /:
+    get:
+      operationId: placeholder
+      responses:
+        201:
+          description: a placeholder response to make spec linting happy
+components:
+  schemas:
+    DefaultInt:
+      type: integer
+    Int64:
+      type: integer
+      format: int64
+    Int32:
+      type: integer
+      format: int32
+    Int16:
+      type: integer
+      format: int16
+    Int8:
+      type: integer
+      format: int8
+    UInt64:
+      type: integer
+      format: int64
+    UInt32:
+      type: integer
+      format: int32
+    UInt16:
+      type: integer
+      format: int16
+    UInt8:
+      type: integer
+      format: int8
+    DefaultNumber:
+      type: number
+    Float64:
+      type: number
+      format: float64
+    Float32:
+      type: number
+      format: float32
+    Boolean:
+      type: boolean
+    DefaultString:
+      type: string
+    ByteArray:
+      type: string
+      format: '[]byte'
+    Email:
+      type: string
+      format: email
+    Date:
+      type: string
+      format: date
+    DateTime:
+      type: string
+      format: date-time
+    JSON:
+      type: string
+      format: json
+    UUID:
+      type: string
+      format: uuid
+    Binary:
+      type: string
+      format: binary

@@ -1,0 +1,51 @@
+# This is an OpenAPI 3 spec fragment which creates components of each possible kind
+# along with inner anonymous structures.
+openapi: 3.0.0
+info:
+  title: placeholder
+  version: 3.0.0
+paths:
+  /:
+    get:
+      operationId: placeholder
+      responses:
+        201:
+          description: a placeholder response to make spec linting happy
+components:
+  schemas:
+    Foo:
+      type: string
+    FooParam:
+      description: designed to clash with de-duped Foo parameter below
+      type: string
+  parameters:
+    Foo:
+      name: Foo
+      in: query
+      required: true
+      schema:
+        type: string
+    FooParam:
+      name: Foo
+      in: query
+      required: true
+      schema:
+        type: string
+  headers:
+    Foo:
+      schema:
+        type: string
+  responses:
+    Foo:
+      description: a response
+      content:
+        application/json:
+          schema:
+            type: string
+  requestBodies:
+    Foo:
+      description: a request body
+      content:
+        text/plain:
+          schema:
+            type: string
