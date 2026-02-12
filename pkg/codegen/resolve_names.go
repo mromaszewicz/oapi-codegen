@@ -272,18 +272,18 @@ func contentTypeSuffix(ct string) string {
 		return ""
 	}
 	ct = strings.ToLower(ct)
-	switch {
-	case strings.Contains(ct, "json"):
+	switch ct {
+	case "application/json":
 		return "JSON"
-	case strings.Contains(ct, "xml"):
+	case "application/xml", "text/xml":
 		return "XML"
-	case strings.Contains(ct, "form"):
+	case "application/x-www-form-urlencoded", "multipart/form-data":
 		return "Form"
-	case strings.Contains(ct, "text"):
+	case "text/plain":
 		return "Text"
-	case strings.Contains(ct, "octet"):
+	case "application/octet-stream":
 		return "Binary"
-	case strings.Contains(ct, "yaml"):
+	case "application/yaml", "application/x-yaml":
 		return "YAML"
 	default:
 		return mediaTypeToCamelCase(ct)
