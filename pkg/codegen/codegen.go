@@ -709,7 +709,7 @@ func GenerateTypesForResponses(t *template.Template, responses openapi3.Response
 				return nil, fmt.Errorf("error making name for components/responses/%s: %w", responseName, err)
 			}
 
-			if resolved := resolvedNameForComponent("responses", responseName); resolved != "" {
+			if resolved := resolvedNameForComponentWithMediaType("responses", responseName, mediaType); resolved != "" {
 				goTypeName = resolved
 			}
 
@@ -764,7 +764,7 @@ func GenerateTypesForRequestBodies(t *template.Template, bodies map[string]*open
 				return nil, fmt.Errorf("error making name for components/schemas/%s: %w", requestBodyName, err)
 			}
 
-			if resolved := resolvedNameForComponent("requestBodies", requestBodyName); resolved != "" {
+			if resolved := resolvedNameForComponentWithMediaType("requestBodies", requestBodyName, mediaType); resolved != "" {
 				goTypeName = resolved
 			}
 
@@ -835,15 +835,40 @@ func resolvedNameForComponent(section, name string) string {
 	}
 
 	// For responses and requestBodies, the path includes content type info,
-	// so we need a prefix match.
+	// so we need an exact prefix match.
 	prefix := key + "/"
+	var found string
+	count := 0
 	for k, resolved := range globalState.resolvedNames {
 		if strings.HasPrefix(k, prefix) {
-			return resolved
+			found = resolved
+			count++
+			if count > 1 {
+				return ""
+			}
 		}
+	}
+	if count == 1 {
+		return found
 	}
 
 	return ""
+}
+
+// resolvedNameForComponentWithMediaType looks up the resolved Go type name
+// for a component with multiple media types
+// Returns empty string if no resolved name is available.
+func resolvedNameForComponentWithMediaType(section, name, mediaType string) string {
+	if len(globalState.resolvedNames) == 0 {
+		return ""
+	}
+
+	key := "components/" + section + "/" + name + "/content/" + mediaType
+	if resolved, ok := globalState.resolvedNames[key]; ok {
+		return resolved
+	}
+
+	return resolvedNameForComponent(section, name)
 }
 
 func GenerateEnums(t *template.Template, types []TypeDefinition) (string, error) {
