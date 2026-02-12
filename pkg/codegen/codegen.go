@@ -709,7 +709,7 @@ func GenerateTypesForResponses(t *template.Template, responses openapi3.Response
 				return nil, fmt.Errorf("error making name for components/responses/%s: %w", responseName, err)
 			}
 
-			if resolved := resolvedNameForComponent("responses", responseName); resolved != "" {
+			if resolved := resolvedNameForComponent("responses", responseName, mediaType); resolved != "" {
 				goTypeName = resolved
 			}
 
@@ -749,7 +749,8 @@ func GenerateTypesForRequestBodies(t *template.Template, bodies map[string]*open
 		// As for responses, we will only generate Go code for JSON bodies,
 		// the other body formats are up to the user.
 		response := requestBodyRef.Value
-		for mediaType, body := range response.Content {
+		for _, mediaType := range SortedMapKeys(response.Content) {
+			body := response.Content[mediaType]
 			if !util.IsMediaTypeJson(mediaType) {
 				continue
 			}
@@ -764,7 +765,7 @@ func GenerateTypesForRequestBodies(t *template.Template, bodies map[string]*open
 				return nil, fmt.Errorf("error making name for components/schemas/%s: %w", requestBodyName, err)
 			}
 
-			if resolved := resolvedNameForComponent("requestBodies", requestBodyName); resolved != "" {
+			if resolved := resolvedNameForComponent("requestBodies", requestBodyName, mediaType); resolved != "" {
 				goTypeName = resolved
 			}
 
@@ -822,8 +823,10 @@ func GenerateTypes(t *template.Template, types []TypeDefinition) (string, error)
 
 // resolvedNameForComponent looks up the resolved Go type name for a component
 // identified by its section (e.g., "schemas", "parameters") and name.
+// For content-bearing sections (responses, requestBodies), an optional
+// contentType can be provided to match the exact media type entry.
 // Returns empty string if no resolved name is available.
-func resolvedNameForComponent(section, name string) string {
+func resolvedNameForComponent(section, name string, contentType ...string) string {
 	if len(globalState.resolvedNames) == 0 {
 		return ""
 	}
@@ -834,8 +837,16 @@ func resolvedNameForComponent(section, name string) string {
 		return resolved
 	}
 
-	// For responses and requestBodies, the path includes content type info,
-	// so we need a prefix match.
+	// For responses and requestBodies, the path includes content type info.
+	// If a specific content type was provided, do an exact match.
+	if len(contentType) > 0 && contentType[0] != "" {
+		exactKey := key + "/content/" + contentType[0]
+		if resolved, ok := globalState.resolvedNames[exactKey]; ok {
+			return resolved
+		}
+	}
+
+	// Fall back to prefix match for callers that don't specify content type.
 	prefix := key + "/"
 	for k, resolved := range globalState.resolvedNames {
 		if strings.HasPrefix(k, prefix) {
