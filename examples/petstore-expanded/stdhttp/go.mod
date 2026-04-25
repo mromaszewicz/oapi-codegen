@@ -5,7 +5,7 @@ go 1.26.2
 replace github.com/oapi-codegen/oapi-codegen/v2 => ../../../
 
 require (
-	github.com/getkin/kin-openapi v0.135.1-0.20260424222420-5a0a3373598f
+	github.com/getkin/kin-openapi v0.136.0
 	github.com/oapi-codegen/nethttp-middleware v1.1.2
 	github.com/oapi-codegen/oapi-codegen/v2 v2.0.0-00010101000000-000000000000
 	github.com/oapi-codegen/runtime v1.4.0

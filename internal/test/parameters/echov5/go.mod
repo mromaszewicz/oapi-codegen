@@ -7,7 +7,7 @@ replace github.com/oapi-codegen/oapi-codegen/v2 => ../../../../
 tool github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen
 
 require (
-	github.com/getkin/kin-openapi v0.135.1-0.20260424222420-5a0a3373598f
+	github.com/getkin/kin-openapi v0.136.0
 	github.com/labstack/echo/v5 v5.0.4
 	github.com/oapi-codegen/runtime v1.4.0
 	github.com/stretchr/testify v1.11.1
