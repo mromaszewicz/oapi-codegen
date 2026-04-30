@@ -1,11 +1,11 @@
 module github.com/oapi-codegen/oapi-codegen/v2/examples/petstore-expanded/echo-v5
 
-go 1.26.2
+go 1.25.9
 
 replace github.com/oapi-codegen/oapi-codegen/v2 => ../../../
 
 require (
-	github.com/getkin/kin-openapi v0.136.0
+	github.com/getkin/kin-openapi v0.137.0
 	github.com/labstack/echo/v5 v5.0.4
 	github.com/oapi-codegen/oapi-codegen/v2 v2.0.0-00010101000000-000000000000
 	github.com/oapi-codegen/runtime v1.4.0

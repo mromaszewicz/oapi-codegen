@@ -1,13 +1,13 @@
 module github.com/oapi-codegen/oapi-codegen/v2/internal/test/parameters/echov5
 
-go 1.26.2
+go 1.25.9
 
 replace github.com/oapi-codegen/oapi-codegen/v2 => ../../../../
 
 tool github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen
 
 require (
-	github.com/getkin/kin-openapi v0.136.0
+	github.com/getkin/kin-openapi v0.137.0
 	github.com/labstack/echo/v5 v5.0.4
 	github.com/oapi-codegen/runtime v1.4.0
 	github.com/stretchr/testify v1.11.1

@@ -1,13 +1,13 @@
 module github.com/oapi-codegen/oapi-codegen/v2/internal/test/strict-server/stdhttp
 
-go 1.26.2
+go 1.25.9
 
 replace github.com/oapi-codegen/oapi-codegen/v2 => ../../../../
 
 replace github.com/oapi-codegen/oapi-codegen/v2/internal/test => ../..
 
 require (
-	github.com/getkin/kin-openapi v0.136.0
+	github.com/getkin/kin-openapi v0.137.0
 	github.com/oapi-codegen/oapi-codegen/v2 v2.0.0-00010101000000-000000000000
 	github.com/oapi-codegen/oapi-codegen/v2/internal/test v0.0.0-00010101000000-000000000000
 	github.com/oapi-codegen/runtime v1.4.0

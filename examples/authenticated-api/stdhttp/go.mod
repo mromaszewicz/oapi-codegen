@@ -1,11 +1,11 @@
 module github.com/oapi-codegen/oapi-codegen/v2/examples/authenticated-api/stdhttp
 
-go 1.26.2
+go 1.25.9
 
 replace github.com/oapi-codegen/oapi-codegen/v2 => ../../../
 
 require (
-	github.com/getkin/kin-openapi v0.136.0
+	github.com/getkin/kin-openapi v0.137.0
 	github.com/lestrrat-go/jwx/v3 v3.0.13
 	github.com/oapi-codegen/nethttp-middleware v1.1.2
 	github.com/oapi-codegen/oapi-codegen/v2 v2.0.0-00010101000000-000000000000
